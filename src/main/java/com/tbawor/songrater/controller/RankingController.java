@@ -12,12 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rankings/")
 public class RankingController {
 
+    private final RankingRepository rankingRepository;
+
     @Autowired
-    private RankingRepository rankingRepository;
+    public RankingController(RankingRepository rankingRepository) {
+        this.rankingRepository = rankingRepository;
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public Ranking saveRanking(@RequestBody Ranking ranking) {
-        rankingRepository.save(ranking);
-        return ranking;
+        return rankingRepository.save(ranking);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Ranking getById(Long id) {
+        return rankingRepository.findOne(id);
     }
 }
