@@ -3,10 +3,7 @@ package com.tbawor.songrater.controller;
 import com.tbawor.songrater.domain.Ranking;
 import com.tbawor.songrater.repository.RankingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/rankings/")
@@ -25,7 +22,7 @@ public class RankingController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Ranking getById(Long id) {
+    public Ranking getById(@PathVariable(name = "id") Long id) {
         return rankingRepository.findOne(id);
     }
 }
