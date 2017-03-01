@@ -1,9 +1,7 @@
 package com.tbawor.songrater.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Ranking {
@@ -11,6 +9,9 @@ public class Ranking {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+
+    @OneToMany(mappedBy = "songRankingKey.ranking")
+    private Set<SongRanking> songRankings;
 
     public Long getId() {
         return id;
@@ -26,5 +27,13 @@ public class Ranking {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<SongRanking> getSongRankings() {
+        return songRankings;
+    }
+
+    public void setSongRankings(Set<SongRanking> songRankings) {
+        this.songRankings = songRankings;
     }
 }

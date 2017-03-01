@@ -2,6 +2,7 @@ package com.tbawor.songrater.controller;
 
 import com.tbawor.songrater.domain.Ranking;
 import com.tbawor.songrater.repository.RankingRepository;
+import com.tbawor.songrater.service.RankingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.*;
 public class RankingControllerTest {
 
     @Mock
-    RankingRepository rankingRepository;
+    RankingService rankingService;
 
     @InjectMocks
     RankingController rankingController;
@@ -30,7 +31,7 @@ public class RankingControllerTest {
         rankingController.saveRanking(ranking);
 
         // then
-        verify(rankingRepository, times(1)).save(eq(ranking));
+        verify(rankingService, times(1)).saveRanking(eq(ranking));
     }
 
     @Test
@@ -39,13 +40,13 @@ public class RankingControllerTest {
         Long rankingId = 321L;
         Ranking ranking = mockRanking();
 
-        doReturn(ranking).when(rankingRepository).findOne(eq(rankingId));
+        doReturn(ranking).when(rankingService).findRankingById(eq(rankingId));
 
         // when
         Ranking returnedRanking = rankingController.getById(rankingId);
 
         // then
-        verify(rankingRepository, times(1)).findOne(eq(rankingId));
+        verify(rankingService, times(1)).findRankingById(eq(rankingId));
         assertThat(returnedRanking).isEqualTo(ranking);
     }
 

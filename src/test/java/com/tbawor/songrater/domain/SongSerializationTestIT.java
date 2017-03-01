@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @JsonTest
-public class SongSerializationTest {
+public class SongSerializationTestIT {
 
     @Autowired
     private JacksonTester<Song> json;

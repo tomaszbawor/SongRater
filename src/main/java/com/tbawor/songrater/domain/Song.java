@@ -1,6 +1,7 @@
 package com.tbawor.songrater.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Song {
@@ -12,6 +13,9 @@ public class Song {
     private String title;
 
     private String url;
+
+    @OneToMany(mappedBy = "songRankingKey.song")
+    private Set<SongRanking> songRankings;
 
     public Long getId() {
         return id;
@@ -35,5 +39,13 @@ public class Song {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Set<SongRanking> getSongRankings() {
+        return songRankings;
+    }
+
+    public void setSongRankings(Set<SongRanking> songRankings) {
+        this.songRankings = songRankings;
     }
 }
