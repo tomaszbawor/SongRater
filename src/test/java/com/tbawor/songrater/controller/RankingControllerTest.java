@@ -1,6 +1,7 @@
 package com.tbawor.songrater.controller;
 
 import com.tbawor.songrater.domain.Ranking;
+import com.tbawor.songrater.domain.Song;
 import com.tbawor.songrater.repository.RankingRepository;
 import com.tbawor.songrater.service.RankingService;
 import org.junit.Test;
@@ -8,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
@@ -23,7 +26,7 @@ public class RankingControllerTest {
     RankingController rankingController;
 
     @Test
-    public void shouldSaveRankingByRankingRepository() {
+    public void shouldSaveRankingByRankingService() {
         // given
         Ranking ranking = mockRanking();
 
@@ -35,7 +38,7 @@ public class RankingControllerTest {
     }
 
     @Test
-    public void shouldFindRankingByIdInRepository() {
+    public void shouldFindRankingByIdInService() {
         // given
         Long rankingId = 321L;
         Ranking ranking = mockRanking();
@@ -48,6 +51,22 @@ public class RankingControllerTest {
         // then
         verify(rankingService, times(1)).findRankingById(eq(rankingId));
         assertThat(returnedRanking).isEqualTo(ranking);
+    }
+
+    @Test
+    public void shouldGetTopFiveFromService() {
+        // given
+        List<Song> top5List = (List<Song>)mock(List.class);
+        Long rankingId = 123L;
+
+        doReturn(top5List).when(rankingService).getTopFiveForRankingWithId(eq(rankingId));
+
+        // when
+        List<Song> returnedTopFive = rankingController.getTopFive(rankingId);
+
+        // then
+        verify(rankingService).getTopFiveForRankingWithId(eq(rankingId));
+        assertThat(returnedTopFive).isEqualTo(top5List);
     }
 
     private Ranking mockRanking() {

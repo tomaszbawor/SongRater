@@ -7,6 +7,8 @@ import com.tbawor.songrater.service.RankingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/rankings/")
 public class RankingController {
@@ -41,5 +43,10 @@ public class RankingController {
     @RequestMapping(value = "/{id}/songs/{songId}/downvote", method = RequestMethod.POST)
     public SongRanking downVoteRankingSong(@PathVariable(name = "id") Long id, @PathVariable(name = "songId") Long songId) {
         return rankingService.downvoteSongInRanking(id, songId);
+    }
+
+    @RequestMapping(value = "/{id}/top5", method = RequestMethod.GET)
+    public List<Song> getTopFive(@PathVariable(name = "id") Long id) {
+        return rankingService.getTopFiveForRankingWithId(id);
     }
 }

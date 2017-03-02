@@ -9,6 +9,10 @@ import com.tbawor.songrater.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class RankingService {
 
@@ -50,6 +54,17 @@ public class RankingService {
         SongRanking songRanking = getSongRanking(rankingId, songId);
         songRanking.setValue(songRanking.getValue() - 1);
         return songRankingRepository.save(songRanking);
+    }
+
+    public List<Song> getTopFiveForRankingWithId(Long rankingId) {
+        return songRankingRepository
+                .findBySongRankingKeyRankingId(rankingId)
+                .stream()
+                .sorted(Comparator.comparing(SongRanking::getValue))
+                .limit(5)
+                .map(SongRanking::getSongRankingKey)
+                .map(SongRanking.SongRankingKey::getSong)
+                .collect(Collectors.toList());
     }
 
     private SongRanking getSongRanking(Long rankingId, Long songId) {

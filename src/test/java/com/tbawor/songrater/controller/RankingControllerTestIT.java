@@ -118,6 +118,15 @@ public class RankingControllerTestIT {
         assertThat(songIdCaptor.getValue()).isEqualTo(456L);
     }
 
+    @Test
+    public void shouldProperlyHandleGettingTopFive() throws Exception {
+        // when
+        mockMvc.perform(get(RANKINGS_URL + "123/top5"));
+
+        // then
+        verify(rankingService).getTopFiveForRankingWithId(eq(123L));
+    }
+
     private Ranking mockRanking() {
         Ranking ranking = new Ranking();
         ranking.setId(12L);
