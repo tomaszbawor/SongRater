@@ -20,10 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SongRankingRepositoryTestIT {
 
     @Autowired
-    TestEntityManager testEntityManager;
+    private TestEntityManager testEntityManager;
 
     @Autowired
-    SongRankingRepository songRankingRepository;
+    private SongRankingRepository songRankingRepository;
 
     @Test
     public void shouldGetSongRankingByRankingId() {

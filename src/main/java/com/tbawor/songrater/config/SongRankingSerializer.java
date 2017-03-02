@@ -12,7 +12,7 @@ import java.io.IOException;
 public class SongRankingSerializer extends JsonSerializer<SongRanking> {
 
     @Override
-    public void serialize(SongRanking songRanking, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
+    public void serialize(SongRanking songRanking, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
 
         jsonGenerator.writeNumberField("rankingId", songRanking.getSongRankingKey().getRanking().getId());

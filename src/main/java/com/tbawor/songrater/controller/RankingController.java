@@ -36,7 +36,7 @@ public class RankingController {
     }
 
     @RequestMapping(value = "/{id}/songs/{songId}/upvote", method = RequestMethod.POST)
-    public SongRanking upVoteRankingSong(@PathVariable(name = "id") Long id, @PathVariable("songId") Long songId) {
+    public SongRanking upVoteRankingSong(@PathVariable(name = "id") Long id, @PathVariable(name = "songId") Long songId) {
         return rankingService.upvoteSongInRanking(id, songId);
     }
 

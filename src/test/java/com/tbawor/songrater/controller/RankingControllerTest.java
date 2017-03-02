@@ -2,7 +2,6 @@ package com.tbawor.songrater.controller;
 
 import com.tbawor.songrater.domain.Ranking;
 import com.tbawor.songrater.domain.Song;
-import com.tbawor.songrater.repository.RankingRepository;
 import com.tbawor.songrater.service.RankingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,10 +19,10 @@ import static org.mockito.Mockito.*;
 public class RankingControllerTest {
 
     @Mock
-    RankingService rankingService;
+    private RankingService rankingService;
 
     @InjectMocks
-    RankingController rankingController;
+    private RankingController rankingController;
 
     @Test
     public void shouldSaveRankingByRankingService() {

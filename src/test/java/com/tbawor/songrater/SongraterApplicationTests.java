@@ -11,6 +11,7 @@ public class SongraterApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		// testing if context is up
 	}
 
 }

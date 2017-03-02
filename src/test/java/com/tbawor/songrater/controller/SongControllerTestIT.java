@@ -30,7 +30,7 @@ public class SongControllerTestIT {
     private MockMvc mockMvc;
 
     @MockBean
-    SongRepository songRepository;
+    private SongRepository songRepository;
 
     @Test
     public void shouldProperlyParseParameterFromUrlWhenGettingById() throws Exception {
