@@ -38,7 +38,8 @@ public class RankingService {
 
     public SongRanking addSongToRanking(Long rankingId, Song song) {
         Ranking ranking = rankingRepository.findOne(rankingId);
-        SongRanking songRanking = new SongRanking(new SongRanking.SongRankingKey(ranking, song), 0L);
+        Boolean shouldRankingBeActive = song.canBeAddedToRanking();
+        SongRanking songRanking = new SongRanking(new SongRanking.SongRankingKey(ranking, song), 0L, shouldRankingBeActive);
 
         songRankingRepository.save(songRanking);
         return songRanking;
@@ -60,6 +61,7 @@ public class RankingService {
         return songRankingRepository
                 .findBySongRankingKeyRankingId(rankingId)
                 .stream()
+                .filter(SongRanking::getActive)
                 .sorted(Comparator.comparing(SongRanking::getValue))
                 .limit(5)
                 .map(SongRanking::getSongRankingKey)

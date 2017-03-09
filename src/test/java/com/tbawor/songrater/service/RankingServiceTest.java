@@ -16,9 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RankingServiceTest {
@@ -133,6 +131,41 @@ public class RankingServiceTest {
         assertThat(songRankingCaptor.getValue().getValue()).isEqualTo(-1L);
         assertThat(songRankingCaptor.getValue().getSongRankingKey().getRanking()).isEqualTo(stubRanking);
         assertThat(songRankingCaptor.getValue().getSongRankingKey().getSong()).isEqualTo(stubSong);
+    }
+
+    @Test
+    public void shouldAddSongRankingAsInactiveWhenSongCanNotBeAddedToRanking() {
+        // given
+        Long rankingId = 123L;
+        Song song = mock(Song.class);
+        ArgumentCaptor<SongRanking> songRankingCaptor = ArgumentCaptor.forClass(SongRanking.class);
+        when(song.canBeAddedToRanking()).thenReturn(false);
+
+
+        // when
+        service.addSongToRanking(rankingId, song);
+
+        // then
+        verify(songRankingRepository).save(songRankingCaptor.capture());
+
+        assertThat(songRankingCaptor.getValue().getActive()).isFalse();
+    }
+
+    @Test
+    public void shouldAddSongRankingAsActiveWhenSongCanBeAddedToRanking() {
+        // given
+        Long rankingId = 123L;
+        Song song = mock(Song.class);
+        ArgumentCaptor<SongRanking> songRankingCaptor = ArgumentCaptor.forClass(SongRanking.class);
+        when(song.canBeAddedToRanking()).thenReturn(true);
+
+        // when
+        service.addSongToRanking(rankingId, song);
+
+        // then
+        verify(songRankingRepository).save(songRankingCaptor.capture());
+
+        assertThat(songRankingCaptor.getValue().getActive()).isTrue();
     }
 
     private SongRanking prepareStubSongRanking(Ranking stubRanking, Song stubSong) {

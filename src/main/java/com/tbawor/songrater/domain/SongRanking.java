@@ -17,6 +17,7 @@ public class SongRanking {
     @EmbeddedId
     private SongRankingKey songRankingKey;
     private Long value;
+    private Boolean active;
 
     public SongRanking() {
     }
@@ -24,6 +25,13 @@ public class SongRanking {
     public SongRanking(SongRankingKey songRankingKey, Long value) {
         this.songRankingKey = songRankingKey;
         this.value = value;
+        this.active = false;
+    }
+
+    public SongRanking(SongRankingKey songRankingKey, Long value, Boolean active) {
+        this.songRankingKey = songRankingKey;
+        this.value = value;
+        this.active = active;
     }
 
     public SongRankingKey getSongRankingKey() {
@@ -40,6 +48,14 @@ public class SongRanking {
 
     public void setValue(Long value) {
         this.value = value;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Embeddable
